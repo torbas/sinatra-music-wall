@@ -12,10 +12,6 @@ get '/url/:id' do
   song = Song.find params[:id]
   url = song.create_url
   redirect url
-  # if url =~ /\Ahttp/
-  #   url = "http://" << url
-  # end
-  # redirect 
 end
 
 post '/' do

@@ -1,0 +1,32 @@
+<div class="jumbotron"><h1>Sign Up on the Wall</h1></div>
+
+<% if @user && @user.errors.any? %>
+  <div>
+    <strong>Some issues with your message, please fix them:</strong>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<form method="post" action="/" role="form">
+  <div class="form-group">
+    <label for="author">Username:</label>
+    <input type="text" name="username" class="form-control" value="<%= @user && @user.username %>">
+  </div>
+  <div class="form-group">
+    <label for="title">Email:</label>
+    <input type="text" name="email" class="form-control" value="<%= @user && @user.email %>">
+  </div>
+  <div class="form-group">
+    <label for="url">Password:</label>
+    <input type="text" name="password" class="form-control" value="<%= @user && @user.password %>">
+  </div>
+  <div>
+    <input class="btn btn-primary" role="button"  type="submit" value="Submit">
+    <a href="/" class="btn btn-danger" role="button" >Cancel</a>
+  </div>
+
+</form>

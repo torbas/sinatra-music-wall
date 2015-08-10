@@ -1,5 +1,11 @@
 <h1>Song Wall</h1>
 
 <% @songs.each do |song| %>
-  <%= song.title %> from <%= song.author %> 
+  <p>
+    <%= song.title %> from <%= song.author %>
+    Created: <%= song.created_at %>
+    <% unless song.url.empty? %>
+      Link:  <%= song.url %>
+    <% end %>
+  <p>
 <% end %>

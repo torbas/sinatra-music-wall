@@ -1,13 +1,17 @@
-<h1>Song Wall</h1>
+<div class="jumbotron"><h1>Song Wall</h1></div>
 
-<p><a href="/songs/new">Add a song</a></p>
+<p><a href="/songs/new" class="btn btn-info" role="button" >Add a song</a></p>
 
+<div class="list-group">
 <% @songs.each do |song| %>
-  <p>
-    <strong><%= song.title %></strong> from <%= song.author %>
-    Created: <%= song.created_at %>
+  <div class="list-group-item">
+    <span class="post-heading"><h1 class="label label-info author"><%= song.author %></h1>
+    Created: <%= song.created_at %></span>
+    <br/><span class="song-title"><strong><%= song.title %></strong></span>
+  
     <% unless song.url.empty? %>
-      Link:  <%= song.url %>
+      <a href="%= song.url %>">Link:  <%= song.url %></a>
     <% end %>
-  <p>
+  </div>
 <% end %>
+</div>

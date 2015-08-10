@@ -1,4 +1,4 @@
-<div class="jumbotron"><h1>Sign Up on the Wall</h1></div>
+<div class="jumbotron"><h1>Sign into the Wall</h1></div>
 
 <% if @user && @user.errors.any? %>
   <div>
@@ -11,7 +11,7 @@
   </div>
 <% end %>
 
-<form method="post" action="/users" role="form">
+<form method="post" action="/users/login" role="form">
   <div class="form-group">
     <label for="author">Username:</label>
     <input type="text" name="username" class="form-control" value="<%= @user && @user.username %>">

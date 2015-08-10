@@ -1,1 +1,5 @@
-<h1>Home Page</h1>
+<h1>Song Wall</h1>
+
+<% @songs.each do |song| %>
+  <%= song.title %> from <%= song.author %> 
+<% end %>

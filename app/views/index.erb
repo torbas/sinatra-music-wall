@@ -10,7 +10,7 @@
     <br/><span class="song-title"><strong><%= song.title %></strong></span>
   
     <% unless song.url.empty? %>
-      <a href="%= song.url %>">Link:  <%= song.url %></a>
+      <a href="url/<%= song.id %>">Link:  <%= song.url %></a>
     <% end %>
   </div>
 <% end %>

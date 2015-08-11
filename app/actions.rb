@@ -1,6 +1,6 @@
 helpers do 
   def current_user
-    User.find(session[:id])
+    User.find(session[:id]) if session[:id]
   end
 end
 
@@ -17,6 +17,9 @@ get '/songs/new' do
     redirect '/users/login'
   end
   erb :'songs/new'
+end
+
+get '/songs/show/:id' do
 end
 
 post '/songs/upvote' do
@@ -83,6 +86,7 @@ get '/users/:id' do
   unless current_user
     redirect '/'
   end
+  @user = current_user
   @songs = Song.where(user_id: params[:id]).order(upvote: :desc)
   erb :'users/index'
 end

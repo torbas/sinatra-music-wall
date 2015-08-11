@@ -1,0 +1,20 @@
+<div class="list-group">
+<% @songs.each do |song| %>
+  <div class="list-group-item">
+    <span class="post-heading"><h1 class="label label-info author"><%= song.author %></h1>
+    Created: <%= song.created_at %></span>
+    <span class="upvote">
+        <form method="post" action="/songs/upvote" role="form">
+        <input type="hidden" name="song_id" value=<%= song.id %>>
+          <input class="btn btn-success" role="button"  type="submit" value="Upvote">
+          +<%= song.upvote %>
+        </form>
+    </span>
+    <br/><span class="song-title"><strong><%= song.title %></strong></span>
+  
+    <% unless song.url.empty? %>
+      <a href="<%= song.url %>">Link:  <%= song.url %></a>
+    <% end %>
+  </div>
+<% end %>
+</div>

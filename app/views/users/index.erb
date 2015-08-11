@@ -1,1 +1,4 @@
-<h1><%= @username %>'s Profile</h1>
+<div class="jumbotron"><h1><%= @user.username %>'s Profile</h1></div>
+<a href="/" class="btn btn-default" role="button" >Home</a>
+<hr />
+<%= erb :'/songs_list' %>

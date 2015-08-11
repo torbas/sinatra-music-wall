@@ -23,3 +23,8 @@
 .upvote{
   float:right;
 }
+
+.welcome-msg{
+  font-weight: bold;
+  margin-bottom: 5px;
+}

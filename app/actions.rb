@@ -1,6 +1,7 @@
 # Homepage (Root path)
 get '/' do
   @username = session[:username]
+  @id = session[:id]
   @songs = Song.all.order(upvote: :desc)
   erb :index
 end
@@ -15,20 +16,14 @@ post '/songs/upvote' do
   redirect '/'
 end
 
-get '/users' do
-  @username = "User"
-  unless session[:username].nil?
-    @username = session[:username]
-  end
-  erb :'users/index'
-end
-
 get '/users/signup' do
   erb :'users/signup'
 end
 
 post '/users/signup' do 
-  encrypted = Digest::MD5.hexdigest(APP_SECRET + params[:password])
+  unless params[:password].empty?
+    encrypted = Digest::MD5.hexdigest(APP_SECRET + params[:password])
+  end
   @user = User.new(
     username: params[:username],
     email: params[:email],
@@ -64,6 +59,15 @@ post '/users/logout' do
   session[:username] = nil
   session[:id] = nil
   redirect '/'
+end
+
+get '/users/:id' do
+  @user = User.find(params[:id])
+  if @user.nil?
+    redirect '/'
+  end
+  @songs = Song.where(user_id: params[:id]).order(upvote: :desc)
+  erb :'users/index'
 end
 
 post '/' do

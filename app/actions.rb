@@ -49,7 +49,7 @@ end
 post '/users/login' do
   result = User.find_by('username = ? AND password = ?', params[:username], params[:password])
   if result.nil?
-    @errors=("Username or password is not correct")
+    @errors=["Username or password is not correct"]
     erb :'users/login'
   else
     session[:username] = result.username

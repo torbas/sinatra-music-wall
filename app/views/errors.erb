@@ -2,7 +2,12 @@
   <div>
     <strong>Some issues with your message, please fix them:</strong>
     <ul>
-      <% @errors.full_messages.each do |message| %>
+      <% if @errors.is_a?(Array) %>
+      <%  the_errors = @errors%>
+      <% else %>
+      <%  the_errors = @errors.full_messages%>
+      <% end%>
+      <% the_errors.each do |message| %>
         <li><%= message %></li>
       <% end %>
     </ul>

@@ -1,3 +1,9 @@
+helpers do 
+  def current_user
+    User.find(session[:id])
+  end
+end
+
 # Homepage (Root path)
 get '/' do
   @username = session[:username]
@@ -7,16 +13,26 @@ get '/' do
 end
 
 get '/songs/new' do
+  unless current_user
+    redirect '/users/login'
+  end
   erb :'songs/new'
 end
 
 post '/songs/upvote' do
-  updated = Song.find(params[:song_id]).increment(:upvote)
+  updated = Upvote.new(
+    song_id: params[:song_id],
+    user_id: session[:id]
+  )
+
   updated.save
   redirect '/'
 end
 
 get '/users/signup' do
+  if current_user
+    redirect '/'
+  end
   erb :'users/signup'
 end
 
@@ -39,6 +55,9 @@ post '/users/signup' do
 end
 
 get '/users/login' do
+  if current_user
+    redirect '/'
+  end
   erb :'users/login'
 end
 
@@ -56,14 +75,12 @@ post '/users/login' do
 end
 
 post '/users/logout' do
-  session[:username] = nil
-  session[:id] = nil
+  session.clear
   redirect '/'
 end
 
 get '/users/:id' do
-  @user = User.find(params[:id])
-  if @user.nil?
+  unless current_user
     redirect '/'
   end
   @songs = Song.where(user_id: params[:id]).order(upvote: :desc)
@@ -86,8 +103,4 @@ post '/' do
     erb :'songs/new'
   end
 
-end
-
-get '/test' do
-  session[:username]
 end

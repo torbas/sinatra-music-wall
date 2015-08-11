@@ -1,8 +1,7 @@
-enable :sessions
-
 # Homepage (Root path)
 get '/' do
-  @songs = Song.all
+  @username = session[:username]
+  @songs = Song.all.order(upvote: :desc)
   erb :index
 end
 
@@ -14,8 +13,17 @@ get '/songs/new' do
   erb :'songs/new'
 end
 
+post '/songs/upvote' do
+  updated = Song.find(params[:song_id]).increment(:upvote)
+  updated.save
+  redirect '/'
+end
+
 get '/users' do
-  session[:username] = "test" #params[:username]
+  @username = "User"
+  unless session[:username].nil?
+    @username = session[:username]
+  end
   erb :'users/index'
 end
 
@@ -42,13 +50,30 @@ get '/users/login' do
 end
 
 post '/users/login' do
+  result = User.find_by('username = ? AND password = ?', params[:username], params[:password])
+  if result.nil?
+    User.errors(:username, "Username or password is not correct")
+    erb :'users/login'
+  else
+    session[:username] = result.username
+    session[:id] = result.id
+    redirect "/"
+  end
+end
+
+post '/users/logout' do
+  session[:username] = nil
+  session[:id] = nil
+  redirect "/"
 end
 
 post '/' do
   @song = Song.new(
     author:  params[:author],
     title: params[:title],
-    url: params[:url]
+    url: params[:url],
+    user_id: session[:id],
+    upvote: 0
   )
   
   if @song.save
@@ -57,4 +82,8 @@ post '/' do
     erb :'songs/new'
   end
 
+end
+
+get '/test' do
+  session[:username]
 end

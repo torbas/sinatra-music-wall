@@ -13,15 +13,15 @@
 
 <form method="post" action="/users" role="form">
   <div class="form-group">
-    <label for="author">Username:</label>
+    <label for="username">Username:</label>
     <input type="text" name="username" class="form-control" value="<%= @user && @user.username %>">
   </div>
   <div class="form-group">
-    <label for="title">Email:</label>
+    <label for="email">Email:</label>
     <input type="text" name="email" class="form-control" value="<%= @user && @user.email %>">
   </div>
   <div class="form-group">
-    <label for="url">Password:</label>
+    <label for="password">Password:</label>
     <input type="text" name="password" class="form-control" value="<%= @user && @user.password %>">
   </div>
   <div>

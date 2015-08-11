@@ -11,3 +11,15 @@
   margin-bottom: 10px;
   display: inline-block;
 }
+
+.menu{
+  margin-bottom: 10px;
+}
+
+.menu form{
+  float:right;
+}
+
+.upvote{
+  float:right;
+}

@@ -1,9 +1,17 @@
 <div class="jumbotron"><h1>Song Wall</h1></div>
 
-<div>
-<a href="/songs/new" class="btn btn-info" role="button" >Add a song</a>
-<a href="/users/login" class="btn btn-info" role="button" >Login</a>
-<a href="/users/signup" class="btn btn-info" role="button" >Sign up</a>
+<div class="welcom-msg">Welcome <%= @username %></div> 
+
+<div class="menu">
+<% if @username.nil? %>
+  <a href="/users/login" class="btn btn-info" role="button" >Login</a>
+  <a href="/users/signup" class="btn btn-info" role="button" >Sign up</a>
+<% else %>
+  <a href="/songs/new" class="btn btn-info" role="button" >Add a song</a>
+  <form method="post" action="/users/logout" role="form">
+    <input class="btn btn-danger" role="button"  type="submit" value="Signout">
+  </form>
+<% end %>
 </div>
 
 <div class="list-group">
@@ -11,6 +19,13 @@
   <div class="list-group-item">
     <span class="post-heading"><h1 class="label label-info author"><%= song.author %></h1>
     Created: <%= song.created_at %></span>
+    <span class="upvote">
+        <form method="post" action="/songs/upvote" role="form">
+        <input type="hidden" name="song_id" value=<%= song.id %>>
+          <input class="btn btn-success" role="button"  type="submit" value="Upvote">
+          +<%= song.upvote %>
+        </form>
+    </span>
     <br/><span class="song-title"><strong><%= song.title %></strong></span>
   
     <% unless song.url.empty? %>

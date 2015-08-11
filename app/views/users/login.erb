@@ -1,15 +1,6 @@
 <div class="jumbotron"><h1>Sign into the Wall</h1></div>
 
-<% if @user && @user.errors.any? %>
-  <div>
-    <strong>Some issues with your message, please fix them:</strong>
-    <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= erb :'/errors' %>
 
 <form method="post" action="/users/login" role="form">
   <div class="form-group">

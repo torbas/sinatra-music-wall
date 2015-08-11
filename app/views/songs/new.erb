@@ -1,15 +1,6 @@
 <div class="jumbotron"><h1>Add a Song to the Wall</h1></div>
 
-<% if @song && @song.errors.any? %>
-  <div>
-    <strong>Some issues with your message, please fix them:</strong>
-    <ul>
-      <% @song.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= erb :'/errors' %>
 
 <form method="post" action="/" role="form">
   <div class="form-group">

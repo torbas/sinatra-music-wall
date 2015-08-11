@@ -9,10 +9,6 @@ get '/songs/new' do
   erb :'songs/new'
 end
 
-get '/songs/new' do
-  erb :'songs/new'
-end
-
 post '/songs/upvote' do
   updated = Song.find(params[:song_id]).increment(:upvote)
   updated.save
@@ -31,7 +27,7 @@ get '/users/signup' do
   erb :'users/signup'
 end
 
-post '/users/signup' do 
+post '/users' do 
   @user = User.new(
     username: params[:username],
     email: params[:email],
@@ -41,6 +37,7 @@ post '/users/signup' do
   if @user.save
     redirect '/users'
   else
+    @errors = @user.errors
     erb :'users/signup'
   end
 end
@@ -52,7 +49,7 @@ end
 post '/users/login' do
   result = User.find_by('username = ? AND password = ?', params[:username], params[:password])
   if result.nil?
-    User.errors(:username, "Username or password is not correct")
+    @errors=("Username or password is not correct")
     erb :'users/login'
   else
     session[:username] = result.username
@@ -79,6 +76,7 @@ post '/' do
   if @song.save
     redirect '/'
   else
+    @errors = @song.errors
     erb :'songs/new'
   end
 

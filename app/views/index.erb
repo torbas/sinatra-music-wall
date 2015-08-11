@@ -5,10 +5,10 @@
 <div class="menu">
 <% if @username.nil? %>
   <a href="/users/login" class="btn btn-info" role="button" >Login</a>
-  <a href="/users/signup" class="btn btn-info" role="button" >Sign up</a>
+  <a href="/users/signup" class="btn btn-info signing" role="button" >Sign up</a>
 <% else %>
   <a href="/songs/new" class="btn btn-info" role="button" >Add a song</a>
-  <form method="post" action="/users/logout" role="form">
+  <form class="signing" method="post" action="/users/logout" role="form">
     <input class="btn btn-danger" role="button"  type="submit" value="Signout">
   </form>
 <% end %>

@@ -12,7 +12,7 @@
           +<%= song.upvote %>
         </form>
     </span>
-    <br/><span class="song-title"><strong><%= song.title %></strong></span>
+    <br/><span class="song-title"><a href="/songs/show/<%= song.id %>"><strong><%= song.title %></strong></a></span>
   
     <% unless song.url.empty? %>
       <a href="<%= song.url %>">Link:  <%= song.url %></a>

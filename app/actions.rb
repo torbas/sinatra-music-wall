@@ -20,6 +20,8 @@ get '/songs/new' do
 end
 
 get '/songs/show/:id' do
+  @song = Song.find(params[:id])
+  erb :'songs/show'
 end
 
 post '/songs/upvote' do

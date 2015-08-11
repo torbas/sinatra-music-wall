@@ -2,7 +2,7 @@
 
 <%= erb :'/errors' %>
 
-<form method="post" action="/users" role="form">
+<form method="post" action="/users/signup" role="form">
   <div class="form-group">
     <label for="username">Username:</label>
     <input type="text" name="username" class="form-control" value="<%= @user && @user.username %>">

@@ -27,15 +27,16 @@ get '/users/signup' do
   erb :'users/signup'
 end
 
-post '/users' do 
+post '/users/signup' do 
+  encrypted = Digest::MD5.hexdigest(APP_SECRET + params[:password])
   @user = User.new(
     username: params[:username],
     email: params[:email],
-    password: params[:password]
+    password: encrypted
   )
 
-  if @user.save
-    redirect '/users'
+  if @user.save   
+    redirect '/users/login'
   else
     @errors = @user.errors
     erb :'users/signup'
@@ -47,7 +48,8 @@ get '/users/login' do
 end
 
 post '/users/login' do
-  result = User.find_by('username = ? AND password = ?', params[:username], params[:password])
+  encrypted = Digest::MD5.hexdigest(APP_SECRET + params[:password])
+  result = User.find_by('username = ? AND password = ?', params[:username], encrypted)
   if result.nil?
     @errors=["Username or password is not correct"]
     erb :'users/login'
@@ -61,7 +63,7 @@ end
 post '/users/logout' do
   session[:username] = nil
   session[:id] = nil
-  redirect "/"
+  redirect '/'
 end
 
 post '/' do

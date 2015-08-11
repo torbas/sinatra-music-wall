@@ -83,6 +83,7 @@ get '/users/:id' do
   unless current_user
     redirect '/'
   end
+  @user = current_user
   @songs = Song.where(user_id: params[:id]).order(upvote: :desc)
   erb :'users/index'
 end

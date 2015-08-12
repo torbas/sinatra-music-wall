@@ -50,3 +50,7 @@ form{
 .rating .label{
   font-size: 100%;
 }
+
+.upvotes {
+  float:right;
+}

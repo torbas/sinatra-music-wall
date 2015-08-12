@@ -5,13 +5,15 @@
   <div class="list-group-item">
     <span class="post-heading"><h1 class="label label-info author"><%= song.author %></h1>
     Created: <%= song.created_at %></span>
-    <span class="right-form">
-        <form method="post" action="/songs/upvote" role="form">
-        <input type="hidden" name="song_id" value=<%= song.id %>>
-          <input class="btn btn-success" role="button"  type="submit" value="Upvote">
-          +<%= song.upvote %>
-        </form>
-    </span>
+    <% if current_user %>
+      <span class="right-form">
+          <form method="post" action="/songs/upvote" role="form">
+          <input type="hidden" name="song_id" value=<%= song.id %>>
+            <input class="btn btn-success" role="button"  type="submit" value="Upvote">
+          </form>
+      </span>
+    <% end %>
+    <span class="upvotes glyphicon glyphicon-arrow-up"><%= song.upvote %></span>
     <br/><span class="song-title"><a href="/songs/show/<%= song.id %>"><strong><%= song.title %></strong></a></span>
   
     <% unless song.url.empty? %>

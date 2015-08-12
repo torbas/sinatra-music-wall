@@ -2,6 +2,9 @@ helpers do
   def current_user
     User.find(session[:id]) if session[:id]
   end
+  def check_review_exist(song_id)
+    Review.find_by('user_id = ? AND song_id = ?', session[:id], song_id) if session[:id]
+  end
 end
 
 # Homepage (Root path)
@@ -21,17 +24,8 @@ end
 
 get '/songs/show/:id' do
   @song = Song.find(params[:id])
+  @reviews = Review.where(song_id: params[:id])
   erb :'songs/show'
-end
-
-post '/songs/upvote' do
-  updated = Upvote.new(
-    song_id: params[:song_id],
-    user_id: session[:id]
-  )
-
-  updated.save
-  redirect '/'
 end
 
 get '/users/signup' do
@@ -39,6 +33,13 @@ get '/users/signup' do
     redirect '/'
   end
   erb :'users/signup'
+end
+
+get '/users/login' do
+  if current_user
+    redirect '/'
+  end
+  erb :'users/login'
 end
 
 post '/users/signup' do 
@@ -57,13 +58,6 @@ post '/users/signup' do
     @errors = @user.errors
     erb :'users/signup'
   end
-end
-
-get '/users/login' do
-  if current_user
-    redirect '/'
-  end
-  erb :'users/login'
 end
 
 post '/users/login' do
@@ -109,4 +103,26 @@ post '/' do
     erb :'songs/new'
   end
 
+end
+
+post '/songs/upvote' do
+  updated = Upvote.new(
+    song_id: params[:song_id],
+    user_id: session[:id]
+  )
+
+  updated.save
+  redirect '/'
+end
+
+post '/songs/review' do
+  review = Review.new(
+    song_id: params[:song_id],
+    user_id: session[:id],
+    content: params[:content]
+  )
+  unless review.save
+    @errors = review.errors
+  end
+  redirect '/songs/show/' << params[:song_id]
 end

@@ -5,7 +5,7 @@
   <div class="list-group-item">
     <span class="post-heading"><h1 class="label label-info author"><%= song.author %></h1>
     Created: <%= song.created_at %></span>
-    <span class="upvote">
+    <span class="right-form">
         <form method="post" action="/songs/upvote" role="form">
         <input type="hidden" name="song_id" value=<%= song.id %>>
           <input class="btn btn-success" role="button"  type="submit" value="Upvote">

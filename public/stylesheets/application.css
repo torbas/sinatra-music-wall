@@ -20,7 +20,11 @@
   float:right;
 }
 
-.upvote{
+.list-group-item{
+  overflow: hidden;
+}
+
+.right-form{
   float:right;
 }
 

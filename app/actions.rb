@@ -2,7 +2,7 @@ helpers do
   def current_user
     User.find(session[:id]) if session[:id]
   end
-  def check_review_exist(song_id)
+  def get_review(song_id)
     Review.find_by('user_id = ? AND song_id = ?', session[:id], song_id) if session[:id]
   end
 end
@@ -135,5 +135,10 @@ post '/songs/review' do
     redirect '/songs/show/' << params[:song_id], notice: msg
   end
 
+  redirect '/songs/show/' << params[:song_id]
+end
+
+post '/songs/reviews/delete' do
+  get_review(params[:song_id]).destroy
   redirect '/songs/show/' << params[:song_id]
 end

@@ -4,7 +4,7 @@
 
 <div class="error"><%= flash[:notice] if flash[:notice] %></div>
 
-<% if current_user && check_review_exist(@song.id).nil? %>
+<% if current_user && get_review(@song.id).nil? %>
   <form method="post" action="/songs/review" role="form">
     <div class="form-group">
       <input type="hidden" name="song_id" value=<%= @song.id %>>
@@ -27,6 +27,14 @@
     <div class="list-group-item">
       <div class="review username label label-info author"><%= review.user.username %></div>
       <hr />
+      <% if get_review(@song.id) %>
+        <span class="right-form">
+          <form method="post" action="/songs/reviews/delete" role="form">
+            <input type="hidden" name="song_id" value=<%= @song.id %>>
+            <input class="btn btn-danger" role="button"  type="submit" value="Delete">
+          </form>
+        </span>
+      <% end %>
       <div class="review"><%= review.content %></div>
     </div>
   <% end %>

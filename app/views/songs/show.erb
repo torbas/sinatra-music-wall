@@ -4,7 +4,7 @@
 
 <div class="error"><%= flash[:notice] if flash[:notice] %></div>
 
-<% if current_user && get_review(@song.id).nil? %>
+<% if current_user && get_current_user_review(@song.id).nil? %>
   <form method="post" action="/songs/review" role="form">
     <div class="form-group">
       <input type="hidden" name="song_id" value=<%= @song.id %>>
@@ -12,6 +12,14 @@
       <textarea name="content" rows="4" cols="50" class="form-control">
       </textarea>
     </div>
+    <label for="rating">Rating:</label>
+   <select name="rating" id="rating">
+      <option selected="selected">1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
     <div>
       <input class="btn btn-primary" role="button"  type="submit" value="Submit">
     </div>
@@ -27,15 +35,16 @@
     <div class="list-group-item">
       <div class="review username label label-info author"><%= review.user.username %></div>
       <hr />
-      <% if get_review(@song.id) %>
-        <span class="right-form">
+      <span class="right-form">
+        <% if get_current_user_review(@song.id) %>
           <form method="post" action="/songs/reviews/delete" role="form">
             <input type="hidden" name="song_id" value=<%= @song.id %>>
             <input class="btn btn-danger" role="button"  type="submit" value="Delete">
           </form>
-        </span>
-      <% end %>
+        <% end %>
+      </span>
       <div class="review"><%= review.content %></div>
+      <div class="rating"><span class="label label-default">Rating: <%= review.rating %></span></div>
     </div>
   <% end %>
 <% end %>

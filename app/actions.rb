@@ -2,7 +2,7 @@ helpers do
   def current_user
     User.find(session[:id]) if session[:id]
   end
-  def get_review(song_id)
+  def get_current_user_review(song_id)
     Review.find_by('user_id = ? AND song_id = ?', session[:id], song_id) if session[:id]
   end
 end
@@ -123,11 +123,12 @@ post '/songs/review' do
   review = Review.new(
     song_id: params[:song_id],
     user_id: session[:id],
-    content: params[:content].chomp
+    content: params[:content].chomp,
+    rating:  params[:rating].to_i
   )
   msg = 'Sorry but review wasn\'t saved'
 
-  if check_review_exist(params[:song_id])
+  if get_current_user_review(params[:song_id])
     msg = 'Sorry but you can only review once'
   end
 
@@ -139,6 +140,6 @@ post '/songs/review' do
 end
 
 post '/songs/reviews/delete' do
-  get_review(params[:song_id]).destroy
+  get_current_user_review(params[:song_id]).destroy
   redirect '/songs/show/' << params[:song_id]
 end

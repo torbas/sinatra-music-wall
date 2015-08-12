@@ -28,3 +28,11 @@
   font-weight: bold;
   margin-bottom: 5px;
 }
+
+.right-form{
+  float:right;
+}
+
+.upvotes{
+  float:right;
+}

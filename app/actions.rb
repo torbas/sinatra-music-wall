@@ -22,6 +22,10 @@ get '/songs/new' do
   erb :'songs/new'
 end
 
+get '/songs/show/?' do
+  erb :'songs/show'
+end
+
 get '/songs/show/:id' do
   @song = Song.find(params[:id])
   @reviews = Review.where(song_id: params[:id])
@@ -119,10 +123,17 @@ post '/songs/review' do
   review = Review.new(
     song_id: params[:song_id],
     user_id: session[:id],
-    content: params[:content]
+    content: params[:content].chomp
   )
-  unless review.save
-    @errors = review.errors
+  msg = 'Sorry but review wasn\'t saved'
+
+  if check_review_exist(params[:song_id])
+    msg = 'Sorry but you can only review once'
   end
+
+  unless review.save 
+    redirect '/songs/show/' << params[:song_id], notice: msg
+  end
+
   redirect '/songs/show/' << params[:song_id]
 end

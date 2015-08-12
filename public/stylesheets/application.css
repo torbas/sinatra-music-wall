@@ -28,3 +28,12 @@
   font-weight: bold;
   margin-bottom: 5px;
 }
+
+.error{
+  color:red;
+  margin-bottom: 10px;
+}
+
+form{
+  margin: 5px;
+}

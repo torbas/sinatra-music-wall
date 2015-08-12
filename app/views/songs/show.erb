@@ -2,9 +2,9 @@
 <a href="/" class="btn btn-default" role="button" >Home</a>
 <hr />
 
-<%= erb :'/errors' %>
+<div class="error"><%= flash[:notice] if flash[:notice] %></div>
 
-<% unless check_review_exist(@song.id) %>
+<% if current_user && check_review_exist(@song.id).nil? %>
   <form method="post" action="/songs/review" role="form">
     <div class="form-group">
       <input type="hidden" name="song_id" value=<%= @song.id %>>
@@ -17,6 +17,8 @@
     </div>
 
   </form>
+<% elsif current_user.nil? %>
+  <h2> You must be logged in to review </h2>
 <% end %>
 
 <div class="list-group">

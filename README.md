@@ -1,7 +1,9 @@
-Sinatra
+Music Wall
 =============
 
-Brought to you by Lighthouse Labs
+Sinatra Demo App using basic Bootstrap to style. 
+App features login, upvote, adding songs, and leaving reviews.
+Styling requires more work.
 
 ## Getting Started
 
